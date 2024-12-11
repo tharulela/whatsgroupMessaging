@@ -4,7 +4,7 @@
   "description": "",
   "main": "todaysDevotional.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +14,8 @@
     "cheerio": "^1.0.0-rc.12",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.17.1"
+  },
+  "devDependencies": {
+    "jest": "^27.4.5"
   }
 }
