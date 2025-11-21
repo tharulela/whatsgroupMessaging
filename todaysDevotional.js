@@ -8,22 +8,46 @@ let obj;
     const args = process.argv.slice(2);
     const postCode = args[0] || 2000;
     let post = "";
-    const url = `https://www.daghewardmills.org/new/portfolio-items/daily-devotional/`;
+    const url = `https://www.daghewardmills.org/portfolio-items/daily-devotional/`;
     try {
         const response = await axios.get(url);
+        console.log(`Fetching daily devotional from ${url}`);
         const $ = cheerio.load(response.data);
+        console.log(`Successfully fetched data from ${url}`);
         const linkTitle = $('h2').find("a").first().text();
         const linkUrl = $('h2').find("a").first().attr('href');
         obj = { title: linkTitle, url: linkUrl }
-        post += `*Dag Heward-Mills ${obj.title}*\n\n`;
+        const start = obj.title.indexOf('“');
+        const end = obj.title.indexOf('”');
+        let extracted = "";
+        if (start !== -1 && end !== -1) {
+           extracted = obj.title.slice(start + 1, end); // +1 to skip the opening quote
+          console.log(extracted); // Output: ACTIVE & AGGRESSIVE
+        } else {
+          console.log('Quotes not found');
+          extracted = obj.title ? obj.title : "No title found";
+        }
+        post += `*${extracted}*\n\n`;
+         post += `*Dag Heward-Mills*\n\n`;
         const message = await axios.get(obj.url);
         const msg = cheerio.load(message.data);
         let arr = [];
         msg('.post-content').find("p").each(function (i, prgh) {
             arr.push(msg(prgh).text())
-            post += `${msg(prgh).text()}\n\n`
+           // post += `${msg(prgh).text()}\n\n`
 
-        })    //text();
+        })    
+        
+        for (const element of arr) {
+           if (element.trim().startsWith("READ:")) {
+            post+=`*${element.trim()}*\n\n`;
+           }  
+           else
+           {
+            post += `${element.trim()}\n\n`;
+           }
+        }
+       
         fs.writeFileSync("textfile.txt", post)
         const date1 = new Date();
         console.log(date1)
@@ -34,7 +58,7 @@ let obj;
         console.log(Math.abs((date1.getTime() - date2.getTime())))
 
     } catch (e) {
-        console.error(`Error while fetching rental properties for ${postCode} - ${e.message}`);
+        console.error(`Error while fetching daily devotional  for ${postCode} - ${e.message}`);
     }
 })();
 
