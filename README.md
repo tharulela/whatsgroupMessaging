@@ -179,6 +179,7 @@ FETCH_MINUTE: 30,
 ## 📖 Documentation
 
 - **[Quick Start Guide](docs/quick-start.md)** - Quick setup guide and common tasks
+- **[Bot Lifecycle](docs/bot-lifecycle.md)** - How auto-refresh works (24/7 operation)
 - **[Scheduler Setup](docs/scheduler-setup.md)** - Detailed scheduler documentation
 - **[Technical Architecture](docs/refactor-notes.md)** - Technical details and architecture
 - **[Refactoring Summary](docs/refactoring-summary.md)** - Code improvements summary
