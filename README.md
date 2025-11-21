@@ -38,7 +38,7 @@ Automated WhatsApp bot for sending daily devotionals and scheduled messages to c
    **For Windows:**
    ```powershell
    # Open PowerShell as Administrator
-   .\setup-task-scheduler.ps1
+   .\scripts\setup-task-scheduler.ps1
    ```
    
    **For Mac/Linux:**
@@ -137,7 +137,7 @@ const GROUPS = {
 ### Change Devotional Fetch Time
 
 **Windows Task Scheduler:**
-Edit `setup-task-scheduler.ps1` line 19, then run it again:
+Edit `scripts/setup-task-scheduler.ps1` line 19, then run it again:
 ```powershell
 $Trigger = New-ScheduledTaskTrigger -Daily -At "07:00AM"
 ```
@@ -172,10 +172,12 @@ FETCH_MINUTE: 30,
 
 ## 📖 Documentation
 
-- **[QUICK-START.md](QUICK-START.md)** - Quick setup guide and common tasks
-- **[SCHEDULER-README.md](SCHEDULER-README.md)** - Detailed scheduler documentation
-- **[REFACTOR-NOTES.md](REFACTOR_NOTES.md)** - Technical details and architecture
-- **[README-REFACTORING.md](README-REFACTORING.md)** - Code improvements summary
+- **[Quick Start Guide](docs/quick-start.md)** - Quick setup guide and common tasks
+- **[Scheduler Setup](docs/scheduler-setup.md)** - Detailed scheduler documentation
+- **[Technical Architecture](docs/refactor-notes.md)** - Technical details and architecture
+- **[Refactoring Summary](docs/refactoring-summary.md)** - Code improvements summary
+- **[Project Structure](docs/project-structure.md)** - Complete file organization
+- **[Conventions & Standards](CONVENTIONS.md)** - Coding standards and best practices
 
 ## 🧪 Testing
 
