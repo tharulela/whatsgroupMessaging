@@ -6,9 +6,11 @@ Automated WhatsApp bot for sending daily devotionals and scheduled messages to c
 
 - ✅ **Daily Devotional** - Automatically fetches and sends devotional content
 - ✅ **Scheduled Messages** - Send messages at specific times to specific groups
+- ✅ **Auto-Refresh** - Bot automatically reschedules messages daily at midnight
 - ✅ **Prayer Reminders** - Automated prayer meeting notifications
 - ✅ **Church Announcements** - Meeting reminders and cleaning schedules
 - ✅ **Session Persistence** - QR code scan only needed once
+- ✅ **24/7 Operation** - Start once, runs forever (no daily restarts needed)
 - ✅ **Error Handling** - Comprehensive error handling and logging
 - ✅ **Cross-Platform** - Works on Windows, Mac, and Linux
 
@@ -56,7 +58,11 @@ Automated WhatsApp bot for sending daily devotionals and scheduled messages to c
 
 5. **Scan QR code with your phone** (first time only)
 
-That's it! The bot is now running and will send messages according to the schedule.
+That's it! The bot is now running 24/7 and will:
+- ✅ Send messages according to the schedule
+- ✅ Automatically refresh at midnight every day
+- ✅ Pick up new devotional content daily
+- ✅ No manual restarts needed!
 
 ## 📅 Default Schedule
 
