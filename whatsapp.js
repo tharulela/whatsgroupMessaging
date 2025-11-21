@@ -1,92 +1,104 @@
-const path = require('path');
 const qrcode = require('qrcode-terminal');
-const fs = require('fs');
+const { Client, LocalAuth } = require('whatsapp-web.js');
+const config = require('./config');
+const helpers = require('./helpers');
 
-
-const { Client } = require('whatsapp-web.js');
-const { MessageMedia } = require('whatsapp-web.js');
-
-let Txtdata = "";
-
-fs.readFile('textfile.txt', 'utf8', (err, data) => {
-    if (err) {
-        console.error(err);
-        return;
-    }
-    console.log(data);
-    Txtdata = data;
-
+// Initialize WhatsApp client with session persistence
+const client = new Client({
+    authStrategy: new LocalAuth()
 });
 
-const client = new Client();
-
+// QR Code event handler
 client.on('qr', (qr) => {
-    // Generate and scan this code with your phone
-    qrcode.generate(qr, { small: true })
+    console.log('\n' + '='.repeat(60));
+    console.log('📱 QR CODE GENERATED');
+    console.log('='.repeat(60));
+    console.log('Please scan this QR code with your WhatsApp mobile app:\n');
+    qrcode.generate(qr, { small: true });
+    console.log('\n' + '='.repeat(60) + '\n');
 });
 
-client.on('ready', () => {
-    console.log('Client is ready!');
-
+// Authentication success handler
+client.on('authenticated', () => {
+    console.log('✓ Authentication successful!');
 });
 
-client.on("ready", () => {
-    let time = 0;
-    const date1 = new Date();
-    console.log(date1)
-    console.log("Client is ready!");
-
-    let date2 = new Date();
-    const media = MessageMedia.fromFilePath(path.resolve('image.jpg'));
-
-    date2.setHours(18);
-    date2.setMinutes(0);
-    date2.setSeconds(0);
-
-    //getting the secongs before we send the message
-    time = Math.abs((date1.getTime() - date2.getTime()))
-    console.log(time)
-    setTimeout(() => {
-        client.getChats().then((chats) => {
-            //Getting the whatsapp group we want to send the message to and sending the message
-            myGroup = chats.find((chat) => chat.name === "LCI SA MIDRAND GROUP_21"); //"LCI SA MIDRAND GROUP_21");
-            client.sendMessage(myGroup.id._serialized, Txtdata);
-            //client.sendMessage(myGroup.id._serialized, media, { caption: msg });
-            myGroup = chats.find((chat) => chat.name === "WORK FOR THE LORD @MIDRAN");
-            // client.sendMessage(myGroup.id._serialized, media, { caption: msg });
-            client.sendMessage(myGroup.id._serialized, Txtdata);
-            myGroup = chats.find((chat) => chat.name === "BACENTA LEADERS @LCI MID");
-            // client.sendMessage(myGroup.id._serialized, media, { caption: msg })
-            client.sendMessage(myGroup.id._serialized, Txtdata);
-        })
-    }, time)
+// Authentication failure handler
+client.on('auth_failure', (message) => {
+    console.error('✗ Authentication failed:', message);
 });
+
+// Disconnection handler
+client.on('disconnected', (reason) => {
+    console.log('⚠️  Client disconnected:', reason);
+});
+
+// Ready event handler - Main logic starts here
+client.on('ready', async () => {
+    console.log('\n' + '='.repeat(60));
+    console.log('✓ CLIENT READY!');
+    console.log('='.repeat(60) + '\n');
+    
+    try {
+        const currentDate = new Date();
+        const tomorrow = new Date(currentDate);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        
+        // Load text file content for daily devotional
+        const textFileContent = await helpers.loadTextFile('textfile.txt');
+        
+        // Get leading prayer message for tomorrow
+        const leadingPrayerMessage = config.getLeadingPrayerMessage(currentDate);
+        
+        // Log current date information
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        console.log(`📅 Current Date: ${currentDate.toDateString()}`);
+        console.log(`📅 Current Time: ${currentDate.toLocaleTimeString()}`);
+        console.log(`📅 Day: ${dayNames[currentDate.getDay()]} (Day ${currentDate.getDay()})`);
+        
+        if (leadingPrayerMessage) {
+            console.log(`🙏 Tomorrow's Prayer Leader: ${config.SHEPHERD_LEADING[tomorrow.getDate()] || 'TBD'}`);
+        }
+        console.log('');
+        
+        // Schedule all messages based on configuration
+        const messageData = {
+            textFileContent,
+            leadingPrayerMessage
+        };
+        
+        await helpers.scheduleAllMessages(
+            client,
+            config.SCHEDULE,
+            currentDate,
+            messageData
+        );
+        
+        console.log('🤖 Bot is now running and waiting to send scheduled messages...\n');
+        
+    } catch (err) {
+        console.error('✗ Error during initialization:', err);
+    }
+});
+
+// Error handler
+client.on('error', (error) => {
+    console.error('✗ Client error:', error);
+});
+
+// Initialize the client
+console.log('🚀 Starting WhatsApp Bot...\n');
 client.initialize();
 
-const msg = `🔔 A kind reminder of our prayer meeting tonight @20:00 ONLINE Pray without ceasing
+// Graceful shutdown handlers
+process.on('SIGINT', async () => {
+    console.log('\n\n⏹️  Shutting down gracefully...');
+    await client.destroy();
+    process.exit(0);
+});
 
-LCI - Midrand is inviting you to a scheduled Zoom prayer meeting.
-
-Topic: Midrand Tuesday Prayer
-Time: 06 September, 2022 20:00 - 21:00 PM Johannesburg
-
-Join Zoom Meeting
-https://us02web.zoom.us/j/86316979039?pwd=dnlReFlrdjhab0JhNzY5eVdUUjQzUT09
-
-Meeting ID: 863 1697 9039
-Passcode: 299298`
-
-
-//const msg = `A kind reminder of our prayer meeting tonight @18:00 Pray without ceasing`
-/*Txtdata = 
-LCI - Midrand is inviting you to a scheduled Zoom meeting.
-
-Topic: Midrand Dawn Prayer
-Time: 31 July, 2022 04:00 - 06:00 AM Johannesburg
-
-Join Zoom Meeting
-https://us02web.zoom.us/j/86316979039?pwd=dnlReFlrdjhab0JhNzY5eVdUUjQzUT09
-
-Meeting ID: 863 1697 9039
-Passcode: 299298
-`*/
+process.on('SIGTERM', async () => {
+    console.log('\n\n⏹️  Shutting down gracefully...');
+    await client.destroy();
+    process.exit(0);
+});

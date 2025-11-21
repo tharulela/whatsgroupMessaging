@@ -1,16 +1,31 @@
 {
-  "name": "daily-devotional-post",
-  "version": "1.0.0",
-  "description": "",
-  "main": "todaysDevotional.js",
+  "name": "whatsapp-group-messaging",
+  "version": "2.0.0",
+  "description": "Automated WhatsApp bot for sending daily devotionals and scheduled messages to church groups",
+  "main": "whatsapp.js",
   "scripts": {
+    "start": "node whatsapp.js",
+    "fetch-devotional": "node todaysDevotional.js",
+    "scheduler": "node devotional-scheduler.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "whatsapp",
+    "bot",
+    "automation",
+    "devotional",
+    "church",
+    "messaging",
+    "scheduler"
+  ],
+  "author": "LCI SA Midrand Church Tech Team",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/whatsgroupMessaging"
+  },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.11.0",
     "cheerio": "^1.0.0-rc.12",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.17.1"

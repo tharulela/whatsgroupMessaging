@@ -18,16 +18,16 @@ coverage/
 # nyc test coverage
 .nyc_output
 
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+# Grunt intermediate storage
 .grunt
 
-# Bower dependency directory (https://bower.io/)
+# Bower dependency directory
 bower_components
 
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
+# Compiled binary addons
 build/Release
 
 # Dependency directories
@@ -66,7 +66,7 @@ jspm_packages/
 .env.test.local
 .env.production.local
 
-# parcel-bundler cache (https://parceljs.org/)
+# parcel-bundler cache
 .cache
 .parcel-cache
 
@@ -96,16 +96,15 @@ session.json
 
 # Log files
 *.log
-logs/
+logs/*.log
+logs/*.txt
+logs/*.json
+# But keep the logs directory structure
+!logs/.gitkeep
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
 
 # IDE and Editor files
 .vscode/
@@ -153,9 +152,8 @@ secrets.json
 *.bak
 *.tmp
 
-# Downloaded devotional content (if you want to ignore)
+# Downloaded devotional content (uncomment if you want to ignore)
 # textfile.txt
-# titleOnly.txt
 
 # Test files
 test/
@@ -167,7 +165,7 @@ build/
 dist/
 out/
 
-# Package manager lock files (uncomment if you want to ignore them)
+# Package manager lock files (keep package-lock.json for consistency)
 # package-lock.json
 # yarn.lock
 
