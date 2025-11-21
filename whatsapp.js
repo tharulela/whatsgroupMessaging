@@ -33,12 +33,10 @@ client.on('disconnected', (reason) => {
     console.log('⚠️  Client disconnected:', reason);
 });
 
-// Ready event handler - Main logic starts here
-client.on('ready', async () => {
-    console.log('\n' + '='.repeat(60));
-    console.log('✓ CLIENT READY!');
-    console.log('='.repeat(60) + '\n');
-    
+/**
+ * Schedule messages for a given day
+ */
+async function scheduleDailyMessages() {
     try {
         const currentDate = new Date();
         const tomorrow = new Date(currentDate);
@@ -76,9 +74,34 @@ client.on('ready', async () => {
         
         console.log('🤖 Bot is now running and waiting to send scheduled messages...\n');
         
+        // Schedule next refresh at midnight (12:00:01 AM tomorrow)
+        const nextMidnight = new Date(currentDate);
+        nextMidnight.setHours(24, 0, 1, 0); // Next day at 12:00:01 AM
+        const msUntilMidnight = nextMidnight.getTime() - currentDate.getTime();
+        
+        console.log(`🔄 Auto-refresh scheduled for: ${nextMidnight.toLocaleString()}`);
+        console.log(`⏱️  Time until refresh: ${Math.floor(msUntilMidnight / (1000 * 60 * 60))}h ${Math.floor((msUntilMidnight % (1000 * 60 * 60)) / (1000 * 60))}m\n`);
+        
+        setTimeout(() => {
+            console.log('\n' + '='.repeat(60));
+            console.log('🔄 DAILY REFRESH - Rescheduling messages for new day');
+            console.log('='.repeat(60) + '\n');
+            scheduleDailyMessages(); // Recursive call for next day
+        }, msUntilMidnight);
+        
     } catch (err) {
-        console.error('✗ Error during initialization:', err);
+        console.error('✗ Error during scheduling:', err);
     }
+}
+
+// Ready event handler - Main logic starts here
+client.on('ready', async () => {
+    console.log('\n' + '='.repeat(60));
+    console.log('✓ CLIENT READY!');
+    console.log('='.repeat(60) + '\n');
+    
+    // Start daily scheduling cycle
+    await scheduleDailyMessages();
 });
 
 // Error handler
