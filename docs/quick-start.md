@@ -58,7 +58,7 @@ The system is now running:
 | CIA Meeting | 3:05 PM | Tuesday | Administrators |
 | Evening Prayer | 8:20 PM | Mon-Thu | Main Church, Key Leaders |
 | Prayer Leader Reminder | 8:25 PM | Mon-Thu | Key Leaders |
-| Cleaning Reminder | 12:00 PM | Friday | Key Leaders |
+| Cleaning Reminder | 12:00 PM |Wednesday & Friday | Key Leaders |
 | Sunday Prayer (1) | 7:00 PM | Saturday | Key Leaders |
 | Sunday Prayer (2) | 7:05 PM | Saturday | Key Leaders |
 

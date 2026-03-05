@@ -58,7 +58,7 @@ Church Intelligence Meeting
 STRONG CHRISTIAN CHURCH - MIDRAND, Z4 is inviting you to a scheduled Zoom meeting.
 
 
-Time: Tuesday 20:00-21:00 PM Johannesburg
+Time: Wednesday 20:00-21:00 PM Johannesburg
 
 Join Zoom Meeting
 https://us02web.zoom.us/j/81914595927?pwd=kk1rN4Ctd4c011V94Pc8Vsw14X5AXD.1
@@ -93,46 +93,42 @@ const PRAYER_LEADERS = {
 
 // Shepherd leading prayer by date
 const SHEPHERD_LEADING = [
-    "", // Day 0
-    "Sister Pheladi",
-    "Sister Ditshebo",
-    "Pastor Samuel",
-    "",
-    "Sister Charmaine",
-    "",
-    "Pastor Mpho",
-    "Sister Tshego",
-    "Pastor Samuel",
-    "Sister Marion",
-    "",
-    "Brother Thabo",
-    "",
-    "Pastor Mpho",
-    "Sister Pheladi",
-    "Sister Ditshebo",
-    "Brother Bernard",
-    "",
-    "Sister Marion",
-    "",
-    "Pastor Mpho",
-    "Sister Tshego",
-    "Sister Charmaine",
-    "Brother Thabo",
-    "",
-    "Sister Pheladi",
-    "",
-    "Pastor Mpho",
-    "Sister Ditshebo",
-    "Pastor Samuel",
-    "Sister Charmaine"
-];
+"",
+"Sister Charmaine",
+"",
+"Pastor Mpho",
+"Brother Zuko",
+"Brother Thabo",
+"Sister Lehlogonolo",
+"",
+"Sister Charmaine",
+" Pastor Mpho",
+"Brother Bernard", 
+"Brother Nicholas",
+"Sister Pheladi",
+"",
+"Brother Zuko",
+"Pastor Mpho",
+"Sister  Lehlogonolo",
+"Brother Bernard",
+"Brother Nicholas",
+"",
+"Brother Thabo",
+"Pastor Mpho",
+"Sister Pheladi",
+"Brother Nicholas",
+"Sister Lehlogonolo",
+"",
+"Sister Charmaine",
+"Pastor Mpho"
+]
 
 // Generate leading prayer message dynamically
 function getLeadingPrayerMessage(date) {
     const tomorrow = new Date(date);
     tomorrow.setDate(tomorrow.getDate() + 1);
     const tomorrowDate = tomorrow.getDate();
-    const leader = SHEPHERD_LEADING[tomorrowDate] || PRAYER_LEADERS[tomorrow.getDay()];
+    const leader = SHEPHERD_LEADING[tomorrowDate];
     
     if (leader) {
         return `${leader} kindly note that you'll be leading prayer tomorrow morning.`;
@@ -140,47 +136,48 @@ function getLeadingPrayerMessage(date) {
     return null;
 }
 
+
 // Schedule configuration
 const SCHEDULE = [
     {
         name: 'Daily Devotional',
-        hour: 10,
-        minute: 5,
+        hour: 9,
+        minute: 45,
         days: [DAYS.SUNDAY, DAYS.MONDAY, DAYS.TUESDAY, DAYS.WEDNESDAY, DAYS.THURSDAY, DAYS.FRIDAY, DAYS.SATURDAY],
         groups: [GROUPS.MAIN_CHURCH],
         messageSource: 'textfile' // Special: load from file
     },
     {
         name: 'CIA Meeting Reminder',
-        hour: 15,
-        minute: 5,
-        days: [DAYS.TUESDAY],
+        hour: 12,
+        minute: 0,
+        days: [DAYS.WEDNESDAY],
         groups: [GROUPS.ADMINISTRATORS],
         message: MESSAGES.ciaMeeting
     },
     {
         name: 'Evening Prayer Invitation',
-        hour: 20,
-        minute: 20,
+        hour: 19,
+        minute: 0,
         days: [DAYS.MONDAY, DAYS.TUESDAY, DAYS.WEDNESDAY, DAYS.THURSDAY],
         groups: [GROUPS.MAIN_CHURCH, GROUPS.KEY_LEADERS],
         message: MESSAGES.prayer
     },
     {
         name: 'Leading Prayer Reminder',
-        hour: 20,
-        minute: 25,
+        hour: 19,
+        minute: 5,
         days: [DAYS.MONDAY, DAYS.TUESDAY, DAYS.WEDNESDAY, DAYS.THURSDAY],
         groups: [GROUPS.KEY_LEADERS],
         messageSource: 'dynamic-leading' // Special: generate dynamically
     },
     {
         name: 'Friday Cleaning Reminder',
-        hour: 12,
+        hour: 11,
         minute: 0,
-        days: [DAYS.FRIDAY],
+        days: [DAYS.FRIDAY, DAYS.WEDNESDAY],
         groups: [GROUPS.KEY_LEADERS],
-        message: MESSAGES.cleaning
+        messageSource: 'dynamic-cleaning' // Special: generate dynamically
     },
     {
         name: 'Saturday Evening Prayer (1)',
@@ -209,5 +206,129 @@ module.exports = {
     SCHEDULE,
     getLeadingPrayerMessage
 };
+
+
+// 2026 Church Cleaning Schedule
+const CLEANING_SCHEDULE_2026 = [
+    { month: 'JANUARY', days: [
+        { date: '03-january-2026', team: 'Ushers' },
+        { date: '10-january-2026', team: 'Saved & Y-Church' },
+        { date: '17-january-2026', team: 'Hospitality' },
+        { date: '24-january-2026', team: 'Media' },
+        { date: '31-january-2026', team: 'Praise & Worship' },
+    ]},
+    { month: 'FEBRUARY', days: [
+        { date: '07-february-2026', team: 'Ushers' },
+        { date: '14-february-2026', team: 'Saved & Y-Church' },
+        { date: '21-february-2026', team: 'Hospitality' },
+        { date: '28-february-2026', team: 'Media' },
+    ]},
+    { month: 'MARCH', days: [
+        { date: '07-march-2026', team: 'Praise & Worship' },
+        { date: '14-march-2026', team: 'Ushers' },
+        { date: '21-march-2026', team: 'Saved & Y-Church' },
+        { date: '28-march-2026', team: 'Hospitality' },
+    ]},
+    { month: 'APRIL', days: [
+        { date: '04-april-2026', team: 'Media' },
+        { date: '11-april-2026', team: 'Praise & Worship' },
+        { date: '18-april-2026', team: 'Ushers' },
+        { date: '25-april-2026', team: 'Saved & Y-Church' },
+    ]},
+    { month: 'MAY', days: [
+        { date: '02-may-2026', team: 'Hospitality' },
+        { date: '09-may-2026', team: 'Media' },
+        { date: '16-may-2026', team: 'Praise & Worship' },
+        { date: '23-may-2026', team: 'Ushers' },
+        { date: '30-may-2026', team: 'Saved & Y-Church' },
+    ]},
+    { month: 'JUNE', days: [
+        { date: '06-june-2026', team: 'Hospitality' },
+        { date: '13-june-2026', team: 'Media' },
+        { date: '20-june-2026', team: 'Praise & Worship' },
+        { date: '27-june-2026', team: 'Ushers' },
+    ]},
+    { month: 'JULY', days: [
+        { date: '04-july-2026', team: 'Saved & Y-Church' },
+        { date: '11-july-2026', team: 'Hospitality' },
+        { date: '18-july-2026', team: 'Media' },
+        { date: '25-july-2026', team: 'Praise & Worship' },
+    ]},
+    { month: 'AUGUST', days: [
+        { date: '01-august-2026', team: 'Ushers' },
+        { date: '08-august-2026', team: 'Saved & Y-Church' },
+        { date: '15-august-2026', team: 'Hospitality' },
+        { date: '22-august-2026', team: 'Media' },
+        { date: '29-august-2026', team: 'Praise & Worship' },
+    ]},
+    { month: 'SEPTEMBER', days: [
+        { date: '05-september-2026', team: 'Ushers' },
+        { date: '12-september-2026', team: 'Saved & Y-Church' },
+        { date: '19-september-2026', team: 'Hospitality' },
+        { date: '26-september-2026', team: 'Media' },
+    ]},
+    { month: 'OCTOBER', days: [
+        { date: '03-october-2026', team: 'Praise & Worship' },
+        { date: '10-october-2026', team: 'Ushers' },
+        { date: '17-october-2026', team: 'Saved & Y-Church' },
+        { date: '24-october-2026', team: 'Hospitality' },
+        { date: '31-october-2026', team: 'Media' },
+    ]},
+    { month: 'NOVEMBER', days: [
+        { date: '07-november-2026', team: 'Praise & Worship' },
+        { date: '14-november-2026', team: 'Ushers' },
+        { date: '21-november-2026', team: 'Saved & Y-Church' },
+        { date: '28-november-2026', team: 'Hospitality' },
+    ]},
+    { month: 'DECEMBER', days: [
+        { date: '05-december-2026', team: 'Media' },
+        { date: '12-december-2026', team: 'Praise & Worship' },
+        { date: '19-december-2026', team: 'Ushers' },
+        { date: '26-december-2026', team: 'Saved & Y-Church' },
+    ]},
+];
+
+module.exports.CLEANING_SCHEDULE_2026 = CLEANING_SCHEDULE_2026;
+
+
+/**
+ * Returns the cleaning team for the coming Saturday from the 2026 schedule, or null if not found.
+ * @param {Date} [fromDate] - Optional date to start from (defaults to today)
+ * @returns {{date: string, team: string}|null}
+ */
+function getCleaningTeamForComingSaturday(fromDate = new Date()) {
+    // Find next Saturday
+    const date = new Date(fromDate);
+    const day = date.getDay();
+    const daysUntilSaturday = (6 - day + 7) % 7 || 7; // always future Saturday
+    date.setDate(date.getDate() + daysUntilSaturday);
+    // Format as dd-month-2026
+    const dayStr = String(date.getDate()).padStart(2, '0');
+    const monthStr = date.toLocaleString('en-US', { month: 'long' }).toLowerCase();
+    const formatted = `${dayStr}-${monthStr}-2026`;
+    let cleaningTeam = '';
+    // Search in schedule
+    for (const month of CLEANING_SCHEDULE_2026) {
+        for (const entry of month.days) {
+            if (entry.date === formatted) {
+                cleaningTeam = entry.team;
+                break;
+            }
+        }
+
+        if (cleaningTeam) {
+            break;
+        }
+    }
+
+    if (!cleaningTeam) {
+        return null;
+    }
+
+    return `🧼🧽 *Cleaning the Church* 🧽🧼
+Greetings, Brethren,
+*${cleaningTeam}* just a friendly reminder that it's your team's turn to clean the church this Saturday. Please remember to arrange for the key in advance and ensure a thorough cleaning is done. Once completed, kindly share the cleaning report in the group.`;
+}
+module.exports.getCleaningTeamForComingSaturday = getCleaningTeamForComingSaturday;
 
 

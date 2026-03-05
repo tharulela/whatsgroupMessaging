@@ -94,6 +94,7 @@ function scheduleMessage(client, scheduledTime, groupName, message, taskName = '
                 return;
             }
             
+            console.log(`✓ Found group: "${groupName}" (ID: ${targetGroup.id._serialized})`);
             await client.sendMessage(targetGroup.id._serialized, message);
             console.log(`✓ Successfully sent to ${groupName}\n`);
             
@@ -144,6 +145,12 @@ async function scheduleAllMessages(client, scheduleConfig, currentDate, messageD
             message = messageData.leadingPrayerMessage;
             if (!message) {
                 console.log(`⏭️  Skipping "${task.name}" - no prayer leader for tomorrow\n`);
+                continue;
+            }
+        } else if (task.messageSource === 'dynamic-cleaning') {
+            message = messageData.cleaningReminderMessage;
+            if (!message) {
+                console.log(`⏭️  Skipping "${task.name}" - no cleaning team info available\n`);
                 continue;
             }
         }
